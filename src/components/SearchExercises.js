@@ -3,39 +3,44 @@ import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { fetchData, exerciseOptions } from "../utils/fetchData";
 import HorizontalScrollbar from "./HorizontalScrollbar";
 
-const SearchExercises = () => {
-
-  const [search, setSearch] = useState('');
-  const [exercises, setExercises] = useState([]);
+const SearchExercises = (setExercises, bodyPart, setBodyPart) => {
+  const [search, setSearch] = useState("");
   const [bodyParts, setBodyParts] = useState([]);
 
   useEffect(() => {
     const fetchExercisesData = async () => {
-      const bodyPartsData = await fetchData('https://exercisedb.p.rapidapi.com/exercises/bodyPartList' , exerciseOptions);
+      const bodyPartsData = await fetchData(
+        "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
+        exerciseOptions
+      );
 
-      setBodyParts(['all' , ...bodyPartsData]);
+      setBodyParts(["all", ...bodyPartsData]);
 
       fetchExercisesData();
-    }
-  })
+    };
+  });
 
   const handleSearch = async () => {
-    if(search){
-      const exerciseData = await fetchData('https://exercisedb.p.rapidapi.com/exercises' , exerciseOptions);
+    if (search) {
+      const exerciseData = await fetchData(
+        "https://exercisedb.p.rapidapi.com/exercises",
+        exerciseOptions
+      );
 
       // filter method creates a new array containing only the elements that satisfy the specified condition.
       // includes method is used to check if an array or a string contains a specific value or substring,
       const searchedExercises = exerciseData.filter(
-        (item) => item.name.toLowerCase().includes(search)
-               || item.target.toLowerCase().includes(search)
-               || item.equipment.toLowerCase().includes(search)
-               || item.bodyPart.toLowerCase().includes(search),
+        (item) =>
+          item.name.toLowerCase().includes(search) ||
+          item.target.toLowerCase().includes(search) ||
+          item.equipment.toLowerCase().includes(search) ||
+          item.bodyPart.toLowerCase().includes(search)
       );
 
-      setSearch('');
+      setSearch("");
       setExercises(searchedExercises);
     }
-  }
+  };
 
   return (
     <Stack alignItems="center" mt="37px" justifyContent="center" p="20px">
@@ -82,8 +87,8 @@ const SearchExercises = () => {
         <HorizontalScrollbar
           data={bodyParts}
           // bodyParts
-          // setBodyPart={setBodyPart}
-          // bodyPart={bodyPart}
+          setBodyPart={setBodyPart}
+          bodyPart={bodyPart}
         />
       </Box>
     </Stack>
