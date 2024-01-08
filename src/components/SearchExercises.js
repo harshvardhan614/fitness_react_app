@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
-import { fetchData, exerciseOptions } from "../utils/fetchData";
+
+import { exerciseOptions, fetchData } from "../utils/fetchData";
 import HorizontalScrollbar from "./HorizontalScrollbar";
 
-const SearchExercises = (setExercises, bodyPart, setBodyPart) => {
+const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
   const [search, setSearch] = useState("");
   const [bodyParts, setBodyParts] = useState([]);
 
@@ -15,27 +16,30 @@ const SearchExercises = (setExercises, bodyPart, setBodyPart) => {
       );
 
       setBodyParts(["all", ...bodyPartsData]);
-
-      fetchExercisesData();
     };
-  });
+
+    fetchExercisesData();
+  }, []);
 
   const handleSearch = async () => {
+    console.log("searched value:" , search)
     if (search) {
-      const exerciseData = await fetchData(
-        "https://exercisedb.p.rapidapi.com/exercises",
+      const exercisesData = await fetchData(
+        "https://exercisedb.p.rapidapi.com/exercises?limit=900",
+
         exerciseOptions
       );
-
       // filter method creates a new array containing only the elements that satisfy the specified condition.
       // includes method is used to check if an array or a string contains a specific value or substring,
-      const searchedExercises = exerciseData.filter(
+      const searchedExercises = exercisesData.filter(
         (item) =>
           item.name.toLowerCase().includes(search) ||
           item.target.toLowerCase().includes(search) ||
           item.equipment.toLowerCase().includes(search) ||
           item.bodyPart.toLowerCase().includes(search)
       );
+      console.log(searchedExercises)
+      window.scrollTo({ top: 1800, left: 100, behavior: "smooth" });
 
       setSearch("");
       setExercises(searchedExercises);
@@ -86,7 +90,7 @@ const SearchExercises = (setExercises, bodyPart, setBodyPart) => {
       <Box sx={{ position: "relative", width: "100%", p: "20px" }}>
         <HorizontalScrollbar
           data={bodyParts}
-          // bodyParts
+          bodyParts
           setBodyPart={setBodyPart}
           bodyPart={bodyPart}
         />

@@ -46,7 +46,17 @@ body {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-}
+  }
+  .react-horizontal-scrolling-menu--inner-wrapper {
+  width:100%;
+  }
+  .react-horizontal-scrolling-menu--scroll-container {
+  width: calc(100vw - 104px);
+  }
+  
+  /* .react-horizontal-scrolling-menu--scroll-container {
+  width: 75vw;
+  } */
 
 .detail-image {
   width: 729px;
@@ -112,10 +122,13 @@ body {
     height: 300px;
   }
 
-
   .react-horizontal-scrolling-menu--scroll-container {
+    width: 75vw;
+}
+
+  /* .react-horizontal-scrolling-menu--scroll-container {
     width: 500px;
-  }
+  } */
 
   .left-arrow,
   .right-arrow {
