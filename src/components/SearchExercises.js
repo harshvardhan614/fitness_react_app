@@ -26,7 +26,6 @@ const SearchExercises = ({ setExercises, bodyPart, setBodyPart }) => {
     if (search) {
       const exercisesData = await fetchData(
         "https://exercisedb.p.rapidapi.com/exercises?limit=900",
-
         exerciseOptions
       );
       // filter method creates a new array containing only the elements that satisfy the specified condition.
